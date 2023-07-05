@@ -1,32 +1,28 @@
 package docrob.springblog.controllers;
 
+import docrob.springblog.models.Post;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
-@RequestMapping("/posts")
 public class PostController {
-    @GetMapping()
-    @ResponseBody
-    public String index() {
-        return "posts index page";
+    @GetMapping("/post")
+    public String post(Model model){
+        model.addAttribute("post", new Post("Hello", "Hello World"));
+        return "/posts/index";
     }
 
-    @GetMapping("/{id}")
-    @ResponseBody
-    public String detail(@PathVariable Long id) {
-        return "view an individual post: " + id;
+    @GetMapping("/posts")
+    public String posts(Model model){
+        List<Post> posts = new ArrayList<>();
+        posts.add(new Post("Hello", "Hello World"));
+        posts.add(new Post("Hello Part 2", "Hello World Again :)"));
+        model.addAttribute("posts",posts);
+        return "/posts/show";
     }
 
-    @GetMapping("/create")
-    @ResponseBody
-    public String insert() {
-        return "view the form for creating a post";
-    }
-
-    @PostMapping("/create")
-    @ResponseBody
-    public String saveNewPost() {
-        return "create a new post";
-    }
 }

@@ -16,7 +16,7 @@ public class Dog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "dog_name", length = 50, nullable = false)
+    @Column(name = "dog_name", length = 50, nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)

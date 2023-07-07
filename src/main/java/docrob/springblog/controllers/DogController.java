@@ -52,9 +52,9 @@ public class DogController {
             , @RequestParam int age
             , @RequestParam String ownerName) {
         System.out.printf("%d %s %d %s\n", id, dogName, age, ownerName);
-        Dog dog = new Dog(id, dogName, age, ownerName);
+//        Dog dog = new Dog(id, dogName, age, ownerName);
 
-        dogDao.save(dog);
+//        dogDao.save(dog);
 
         return "dog created???";
     }

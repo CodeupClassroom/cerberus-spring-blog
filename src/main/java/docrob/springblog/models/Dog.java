@@ -3,6 +3,8 @@ package docrob.springblog.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,7 +24,15 @@ public class Dog {
     @Column(nullable = false)
     private int age;
 
-    @Column(length = 255)
-    private String ownerName;
+    @ManyToOne
+    private DogOwner owner;
 
+    // insert M:M relationship with toys here
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "dog_toys",
+            joinColumns = {@JoinColumn(name = "dog_id")},
+            inverseJoinColumns = {@JoinColumn(name = "toy_id")}
+    )
+    private List<Toy> toys;
 }

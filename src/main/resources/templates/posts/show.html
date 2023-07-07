@@ -5,9 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div th:each="post : ${posts}">
-    <p th:text="${post.getTitle()}" />
-    <p th:text="${post.getBody()}" />
-</div>
+<h1 th:text="${post.getTitle()}"></h1>
+<h1 th:text="${post.getBody()}"></h1>
+<h1 th:text="${post.getCreator().getUsername()}"></h1>
 </body>
 </html>

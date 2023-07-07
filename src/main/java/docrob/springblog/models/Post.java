@@ -22,4 +22,7 @@ public class Post {
     @Column(length = 1024, nullable = false)
     private String body;
 
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    private User creator;
 }

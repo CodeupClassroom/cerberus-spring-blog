@@ -55,7 +55,7 @@ public class DogController {
             , @RequestParam String ownerName) {
         System.out.printf("%d %s %d %s\n", id, dogName, age, ownerName);
         Dog dog = new Dog(id, dogName, age);
-        emailService.prepareAndSend(dog, "You saved a new dog!", "Your dogs name is:" + dog.getName());
+//        emailService.prepareAndSend(dog, "You saved a new dog!", "Your dogs name is:" + dog.getName());
         dogDao.save(dog);
 
         return "dog created???";

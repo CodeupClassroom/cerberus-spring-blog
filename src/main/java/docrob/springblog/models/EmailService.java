@@ -16,10 +16,10 @@ public class EmailService {
     @Value("${spring.mail.from}")
     private String from;
 
-    public void prepareAndSend(Dog dog, String subject, String body) {
+    public void prepareAndSend(Post post, String subject, String body) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
-        msg.setTo("lola.castillo@codeup.edu");
+        msg.setTo(post.getCreator().getEmail());
         msg.setSubject(subject);
         msg.setText(body);
 

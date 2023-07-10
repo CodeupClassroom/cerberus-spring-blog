@@ -1,5 +1,6 @@
 package docrob.springblog.controllers;
 
+import docrob.springblog.models.EmailService;
 import docrob.springblog.models.Post;
 import docrob.springblog.models.User;
 import docrob.springblog.repositories.PostRepository;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class PostController {
     private PostRepository postDao;
     private UserRepository userDao;
+    private EmailService emailService;
 
     @GetMapping("")
     public String posts(Model model){
@@ -54,9 +56,9 @@ public class PostController {
         post.setBody(body);
 
         // TODO: use user id 1 for now. change later to currently logged in user
-        User loggedInUser = userDao.findById(2L).get();
+        User loggedInUser = userDao.findById(1L).get();
         post.setCreator(loggedInUser);
-
+        emailService.prepareAndSend(post,title,body);
         postDao.save(post);
 
         return "redirect:/posts";

@@ -26,8 +26,7 @@ public class Dog {
     @ManyToOne
     private DogOwner owner;
 
-    public Dog(long id, String name, int age) {
-        this.id = id;
+    public Dog(String name, int age) {
         this.name = name;
         this.age = age;
     }

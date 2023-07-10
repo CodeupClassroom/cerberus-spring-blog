@@ -1,22 +1,18 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create a Dog</title>
 </head>
 <body>
-<form method="post" action="/dogs/create">
-  <label for="id">Id</label>
-  <input type="text" name="id" id="id">
+<form method="post" action="/dogs/create" th:object="${dog}">
 
   <label for="dogName">Dog Name</label>
-  <input type="text" name="dogName" id="dogName">
+  <input type="text" name="dogName" id="dogName" th:field="*{name}">
 
   <label for="age">Age</label>
-  <input type="text" name="age" id="age">
-
-  <label for="ownerName">Owner Name</label>
-  <input type="text" name="ownerName" id="ownerName">
+  <input type="text" name="age" id="age" th:field="*{age}">
 
   <button type="submit">Save Dog</button>
 </form>

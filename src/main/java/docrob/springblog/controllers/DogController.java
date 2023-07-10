@@ -5,6 +5,7 @@ import docrob.springblog.models.EmailService;
 import docrob.springblog.repositories.DogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,6 @@ public class DogController {
     private EmailService emailService;
 
     @GetMapping
-    @ResponseBody
     public String index() {
         List<Dog> dogs = dogDao.findAll();
 
@@ -43,18 +43,15 @@ public class DogController {
     }
 
     @GetMapping("/create")
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("dog", new Dog());
         return "/dogs/create";
     }
 
     @PostMapping("/create")
     @ResponseBody
-    public String create(@RequestParam Long id
-            , @RequestParam String dogName
-            , @RequestParam int age
-            , @RequestParam String ownerName) {
-        System.out.printf("%d %s %d %s\n", id, dogName, age, ownerName);
-        Dog dog = new Dog(id, dogName, age);
+    public String create(@ModelAttribute Dog dog) {
+        System.out.printf("%s %d \n", dog.getName(), dog.getAge());
 //        emailService.prepareAndSend(dog, "You saved a new dog!", "Your dogs name is:" + dog.getName());
         dogDao.save(dog);
 

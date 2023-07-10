@@ -6,7 +6,7 @@
     <title>Create a Dog</title>
 </head>
 <body>
-<form method="post" action="/dogs/create" th:object="${dog}">
+<form id="dog-form" method="post" action="/dogs/create" th:object="${dog}">
 
   <label for="dogName">Dog Name</label>
   <input type="text" name="dogName" id="dogName" th:field="*{name}">
@@ -14,8 +14,39 @@
   <label for="age">Age</label>
   <input type="text" name="age" id="age" th:field="*{age}">
 
-  <button type="submit">Save Dog</button>
+  <button type="submit" id="submit-btn">Save Dog</button>
 </form>
+
+<div id="err-message"></div>
+
+<script>
+    const btn = document.querySelector("#submit-btn");
+    btn.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        const ageOk = validateAge();
+        if(ageOk === true) {
+            const frm = document.querySelector("#dog-form");
+            frm.submit();
+        }
+    });
+
+    function validateAge() {
+        const age = document.querySelector("#age").value;
+
+        if(age !== "4") {
+            setErrMessage("age must be a number")
+            return false;
+        }
+
+        return true;
+    }
+
+    function setErrMessage(msg) {
+        const errMsg = document.querySelector("#err-message");
+        errMsg.innerText = msg;
+    }
+</script>
 
 </body>
 </html>

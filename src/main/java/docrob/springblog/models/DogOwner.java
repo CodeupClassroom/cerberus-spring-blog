@@ -23,6 +23,8 @@ public class DogOwner {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Dog> dogs;
 
+    private String Email;
+
     @Override
     public String toString() {
         String str = name + " has dog(s): ";

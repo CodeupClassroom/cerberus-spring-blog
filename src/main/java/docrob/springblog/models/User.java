@@ -1,5 +1,6 @@
 package docrob.springblog.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,4 +29,7 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "creator")
     private List<Post> posts;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentUser")
+    private List<Ad> Ads;
 }

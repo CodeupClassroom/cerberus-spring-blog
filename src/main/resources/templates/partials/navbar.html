@@ -8,7 +8,7 @@
 <div th:fragment="navbar">
   <nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">PostMonster</a>
+      <a class="navbar-brand" href="/">PostMonster</a>
       <!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
       <!--            <span class="navbar-toggler-icon"></span>-->
       <!--        </button>-->
@@ -26,9 +26,14 @@
           <li class="nav-item">
             <a th:classappend="${selectedPage == 'posts-create'} ? active" class="nav-link" href="/posts/create">Create Post</a>
           </li>
-          <li class="ms-auto nav-item">
-            <span class="nav-link disabled" th:text="@{| ${userNameLabel == null ? 'Not logged in' : userNameLabel} |}">insert logged in user name here</span>
+
+          <li class="nav-item">
+            <a th:classappend="${selectedPage == 'dogs'} ? active" class="nav-link" aria-current="page" href="/dogs">Dogs</a>
           </li>
+
+          <!--          <li sec:authorize="isAuthenticated()" class="ms-auto nav-item">-->
+<!--            <span class="nav-link disabled" th:text="@{| ${#authentication.principal.username == null ? 'Not logged in' : 'Logged in as ' + #authentication.principal.username} |}">insert logged in user name here</span>-->
+<!--          </li>-->
         </ul>
       </div>
     </div>

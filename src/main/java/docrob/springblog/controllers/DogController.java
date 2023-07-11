@@ -2,8 +2,10 @@ package docrob.springblog.controllers;
 
 import docrob.springblog.models.Dog;
 import docrob.springblog.models.EmailService;
+import docrob.springblog.models.User;
 import docrob.springblog.repositories.DogRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,26 +22,33 @@ public class DogController {
     private EmailService emailService;
 
     @GetMapping
-    public String index() {
+    public String index(Model model) {
+        User loggedInUser = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        if(loggedInUser.getId() == 0) {
+            System.out.println("You are not logged in");
+        } else {
+            System.out.println("You are logged in as user id " + loggedInUser.getId()
+                    + " " + loggedInUser.getUsername()
+                    + " " + loggedInUser.getEmail());
+        }
         List<Dog> dogs = dogDao.findAll();
+        model.addAttribute("dogs", dogs);
 
-        System.out.println(dogs);
-
-        List<Dog> sDogs = dogDao.searchByName("u");
-        System.out.println(sDogs);
-
-        return "show all dogs here";
+        return "/dogs/index";
     }
 
     @GetMapping("/{id}")
-    @ResponseBody
-    public String fetchById(@PathVariable Long id) {
+    public String fetchById(@PathVariable Long id, Model model) {
         Optional<Dog> optionalDog = dogDao.findById(id);
         if(optionalDog.isEmpty()) {
             return "no dog found. return a 404 instead";
         }
         Dog dog = optionalDog.get();
-        return dog.toString();
+        model.addAttribute("dog", dog);
+        return "/dogs/show";
     }
 
     @GetMapping("/create")
@@ -49,20 +58,18 @@ public class DogController {
     }
 
     @PostMapping("/create")
-    @ResponseBody
     public String create(@ModelAttribute Dog dog) {
         System.out.printf("%s %d \n", dog.getName(), dog.getAge());
 //        emailService.prepareAndSend(dog, "You saved a new dog!", "Your dogs name is:" + dog.getName());
         dogDao.save(dog);
 
-        return "dog created???";
+        return "redirect:/dogs";
     }
 
     @GetMapping("/{id}/delete")
-    @ResponseBody
     public String delete(@PathVariable Long id) {
         dogDao.deleteById(id);
-        return "dog " + id + " deleted";
+        return "redirect:/dogs";
     }
 
 }

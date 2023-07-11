@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add a Blog Post!</title>
@@ -7,14 +7,17 @@
 <body>
     <h3>Add a blog post!</h3>
 
-    <form method="post" action="/posts/create">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" placeholder="Enter a title">
+    <form id="post-form" method="post" action="/posts/create" th:object="${newPost}">
 
-        <label for="body">Body</label>
-        <textarea id="body" name="body" placeholder="Enter a blog post body"></textarea>
+        <input type="hidden" name="postId" th:field="*{id}">
 
-        <button type="submit">Save it!</button>
+        <label for="postTitle">Title</label>
+        <input type="text" name="title" id="postTitle" th:field="*{title}">
+
+        <label for="postBody">Body</label>
+        <textarea type="text" name="body" id="postBody" th:field="*{body}"></textarea>
+
+        <button type="submit" id="submit-btn">Post</button>
     </form>
 
 </body>

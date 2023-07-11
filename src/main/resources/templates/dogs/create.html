@@ -1,52 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Create a Dog</title>
+    <header th:insert="partials/header :: head"></header>
+    <title>Create Dog</title>
 </head>
+
 <body>
-<form id="dog-form" method="post" action="/dogs/create" th:object="${dog}">
+<nav th:replace="partials/navbar :: navbar">
+</nav>
 
-  <label for="dogName">Dog Name</label>
-  <input type="text" name="dogName" id="dogName" th:field="*{name}">
+<div class="container-fluid">
+    <h1 th:text="${title}">insert title here</h1>
 
-  <label for="age">Age</label>
-  <input type="text" name="age" id="age" th:field="*{age}">
+    <form class="mb-3" th:action="@{/dogs/create}" th:method="post" th:object="${dog}" >
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Name goes here">
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="text" id="age" th:field="*{age}" class="form-control" placeholder="Age goes here">
+        </div>
 
-  <button type="submit" id="submit-btn">Save Dog</button>
-</form>
+        <button type="submit" class="btn btn-primary">Save Dog</button>
 
-<div id="err-message"></div>
+    </form>
 
-<script>
-    const btn = document.querySelector("#submit-btn");
-    btn.addEventListener("click", function(event) {
-        event.preventDefault();
+    <footer th:replace="partials/footer :: footer">
+    </footer>
 
-        const ageOk = validateAge();
-        if(ageOk === true) {
-            const frm = document.querySelector("#dog-form");
-            frm.submit();
-        }
-    });
+</div>
 
-    function validateAge() {
-        const age = document.querySelector("#age").value;
-
-        if(age !== "4") {
-            setErrMessage("age must be a number")
-            return false;
-        }
-
-        return true;
-    }
-
-    function setErrMessage(msg) {
-        const errMsg = document.querySelector("#err-message");
-        errMsg.innerText = msg;
-    }
-</script>
 
 </body>
 </html>

@@ -4,6 +4,7 @@ import docrob.springblog.models.Dog;
 import docrob.springblog.models.EmailService;
 import docrob.springblog.models.User;
 import docrob.springblog.repositories.DogRepository;
+import docrob.springblog.services.AuthBuddy;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,18 +24,12 @@ public class DogController {
 
     @GetMapping
     public String index(Model model) {
-        User loggedInUser = (User) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        if(loggedInUser.getId() == 0) {
-            System.out.println("You are not logged in");
-        } else {
-            System.out.println("You are logged in as user id " + loggedInUser.getId()
-                    + " " + loggedInUser.getUsername()
-                    + " " + loggedInUser.getEmail());
-        }
+        User loggedInUser = AuthBuddy.getLoggedInUser();
+        model.addAttribute("loggedInUser", loggedInUser);
+        System.out.println(loggedInUser);
+
         List<Dog> dogs = dogDao.findAll();
+
         model.addAttribute("dogs", dogs);
 
         return "/dogs/index";
@@ -42,6 +37,9 @@ public class DogController {
 
     @GetMapping("/{id}")
     public String fetchById(@PathVariable Long id, Model model) {
+        User loggedInUser = AuthBuddy.getLoggedInUser();
+        model.addAttribute("loggedInUser", loggedInUser);
+
         Optional<Dog> optionalDog = dogDao.findById(id);
         if(optionalDog.isEmpty()) {
             return "no dog found. return a 404 instead";
@@ -53,12 +51,17 @@ public class DogController {
 
     @GetMapping("/create")
     public String create(Model model) {
+        User loggedInUser = AuthBuddy.getLoggedInUser();
+        model.addAttribute("loggedInUser", loggedInUser);
+
         model.addAttribute("dog", new Dog());
         return "/dogs/create";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute Dog dog) {
+        User loggedInUser = AuthBuddy.getLoggedInUser();
+
         System.out.printf("%s %d \n", dog.getName(), dog.getAge());
 //        emailService.prepareAndSend(dog, "You saved a new dog!", "Your dogs name is:" + dog.getName());
         dogDao.save(dog);
@@ -68,6 +71,8 @@ public class DogController {
 
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
+        User loggedInUser = AuthBuddy.getLoggedInUser();
+
         dogDao.deleteById(id);
         return "redirect:/dogs";
     }

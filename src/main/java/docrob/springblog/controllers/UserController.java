@@ -2,6 +2,7 @@ package docrob.springblog.controllers;
 
 import docrob.springblog.models.User;
 import docrob.springblog.repositories.UserRepository;
+import docrob.springblog.services.AuthBuddy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class UserController {
 
     @GetMapping("/sign-up")
     public String showSignupForm(Model model){
+        User loggedInUser = AuthBuddy.getLoggedInUser();
+        model.addAttribute("loggedInUser", loggedInUser);
+
         model.addAttribute("user", new User());
         return "users/sign-up";
     }

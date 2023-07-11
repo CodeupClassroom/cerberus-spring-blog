@@ -11,7 +11,7 @@
 </nav>
 
 <div class="container-fluid">
-    <h1 th:text="${title}">insert title here</h1>
+    <h1>Create a Dog</h1>
 
     <form class="mb-3" th:action="@{/dogs/create}" th:method="post" th:object="${dog}" >
         <input type="hidden" th:field="*{id}">

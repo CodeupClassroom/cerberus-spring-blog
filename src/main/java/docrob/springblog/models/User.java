@@ -39,4 +39,9 @@ public class User {
         username = copy.username;
         password = copy.password;
     }
+
+    @Override
+    public String toString() {
+        return "User id " + id + " username: " + username;
+    }
 }

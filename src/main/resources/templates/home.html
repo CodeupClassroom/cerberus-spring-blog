@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8" />
-  <title>Home</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="eng">
 
-<h1>This is the home page</h1>
+<head>
+  <meta th:insert="partials/header :: head">
+  <title>PostMonster</title>
+</head>
+
+<body>
+<nav th:replace="partials/navbar :: navbar">
+</nav>
+
+<div class="container-fluid">
+  <h1>This is the home page</h1>
+
+  <footer th:replace="partials/footer :: footer">
+  </footer>
+
+</div>
+
 
 </body>
 </html>

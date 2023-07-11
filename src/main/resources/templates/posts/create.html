@@ -1,21 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Add a Blog Post!</title>
+    <header th:insert="partials/header :: head"></header>
+    <title>Create Post</title>
 </head>
+
 <body>
-    <h3>Add a blog post!</h3>
+<nav th:replace="partials/navbar :: navbar">
+</nav>
 
-    <form method="post" action="/posts/create">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" placeholder="Enter a title">
+<div class="container-fluid">
+    <h1 th:text="${title}">insert title here</h1>
 
-        <label for="body">Body</label>
-        <textarea id="body" name="body" placeholder="Enter a blog post body"></textarea>
+    <form class="mb-3" th:action="@{/posts/create}" th:method="post" >
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" id="title" placeholder="Title goes here">
+        </div>
+        <div class="mb-3">
+            <label for="body" class="form-label">Body</label>
+            <textarea class="form-control" name="body" id="body"  rows="3" placeholder="Body goes here"></textarea>
+        </div>
 
-        <button type="submit">Save it!</button>
+        <button type="submit" class="btn btn-primary">Save Post</button>
+
     </form>
+
+    <footer th:replace="partials/footer :: footer">
+    </footer>
+
+</div>
+
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 .DS_Store
 
 application.properties
+keys.js
 
 HELP.md
 target/

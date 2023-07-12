@@ -23,6 +23,9 @@
         <div class="mb-3">
             <label for="body" class="form-label">Body</label>
             <textarea class="form-control" name="body" id="body" th:field="*{body}" rows="3" placeholder="Body goes here"></textarea>
+
+            <button class="btn btn-secondary mt-2" type="button" id="btn-quote" name="btn-quote">Get Random Quote</button>
+
         </div>
 
         <button type="submit" class="btn btn-primary">Save Post</button>
@@ -32,6 +35,25 @@
     <footer th:replace="partials/footer :: footer">
     </footer>
 
+    <script src="/js/keys.js"></script>
+    <script>
+        document.querySelector("#btn-quote").addEventListener("click", async function(event) {
+            // RAPID_API_QUOTE_API_HOST
+            // RAPID_API_QUOTE_API_KEY
+            const quote = await fetch(RAPID_API_QUOTE_API_URL, {
+                method: "GET",
+                headers: {
+                    'X-Rapidapi-Host': RAPID_API_QUOTE_API_HOST,
+                    'X-Rapidapi-Key': RAPID_API_QUOTE_API_KEY
+                }
+            }).then(function(response) {
+                return response.json();
+            });
+
+            document.querySelector("#body").innerText = quote[0].quote;
+        });
+
+    </script>
 </div>
 
 

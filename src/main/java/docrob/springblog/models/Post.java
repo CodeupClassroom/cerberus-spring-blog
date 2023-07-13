@@ -26,6 +26,9 @@ public class Post {
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    @Column(length = 1024)
+    private String imagePath;
+
     public Post(String title, String body, User creator) {
         this.title = title;
         this.body = body;

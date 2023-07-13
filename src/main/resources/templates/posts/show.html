@@ -18,6 +18,7 @@
 
     <h5 name="body" id="body" th:text="${post.body}" class="mt-3">(insert body here)</h5>
 
+    <img th:src="${post.imagePath}">
 
 <footer th:replace="partials/footer :: footer">
 </footer>

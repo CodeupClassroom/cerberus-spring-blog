@@ -75,18 +75,20 @@ public class MyListController {
 
         // delete any todos from the db for the list that are not in the list parameter
         // note that this is an awful solution!
-        List<MyListTodo> originalTodos = todoDao.findMyListTodoByList(list);
-        for (MyListTodo todo : originalTodos) {
-            // for each todo, look thru the todos in the list object and see if it is there
-            // if not, then it needs to be deleted
-            boolean found = false;
-            for(MyListTodo todoCheck : list.getTodos()) {
-                if(todoCheck.getId() == todo.getId()) {
-                    found = true;
+        if(list.getId() > 0) { // only need to do this IF the list is not new
+            List<MyListTodo> originalTodos = todoDao.findMyListTodoByList(list);
+            for (MyListTodo todo : originalTodos) {
+                // for each todo, look thru the todos in the list object and see if it is there
+                // if not, then it needs to be deleted
+                boolean found = false;
+                for (MyListTodo todoCheck : list.getTodos()) {
+                    if (todoCheck.getId() == todo.getId()) {
+                        found = true;
+                    }
                 }
-            }
-            if(!found) {
-                todoDao.deleteById(todo.getId());
+                if (!found) {
+                    todoDao.deleteById(todo.getId());
+                }
             }
         }
 

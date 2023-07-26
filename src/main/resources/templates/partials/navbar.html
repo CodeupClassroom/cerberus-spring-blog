@@ -31,6 +31,10 @@
             <a th:classappend="${selectedPage == 'dogs'} ? active" class="nav-link" aria-current="page" href="/dogs">Dogs</a>
           </li>
 
+          <li class="nav-item">
+            <a th:classappend="${selectedPage == 'lists'} ? active" class="nav-link" aria-current="page" href="/lists">Lists</a>
+          </li>
+
           <!--          <li sec:authorize="isAuthenticated()" class="ms-auto nav-item">-->
 <!--            <span class="nav-link disabled" th:text="@{| ${#authentication.principal.username == null ? 'Not logged in' : 'Logged in as ' + #authentication.principal.username} |}">insert logged in user name here</span>-->
 <!--          </li>-->

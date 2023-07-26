@@ -30,7 +30,7 @@ public class PostController {
 
         List<Post> posts = postDao.findAll();
 
-        model.addAttribute("posts",posts);
+        model.addAttribute("posts", posts);
         return "/posts/index";
     }
 

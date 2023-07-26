@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <header th:insert="partials/header :: head"></header>
+    <title>Create List</title>
+</head>
+
+<body>
+<nav th:replace="partials/navbar :: navbar">
+</nav>
+
+<div class="container-fluid">
+    <h1>Create a List</h1>
+
+    <form class="mb-3" th:action="@{/lists/create}" th:method="post" th:object="${list}" >
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="List name goes here">
+        </div>
+
+        <h5>Todos</h5>
+        <button type="button" class="btn btn-secondary" id="add-todo">Add Todo</button>
+
+        <ul id="my-todos">
+            <li th:each="todo, itemStat : *{todos}">
+                <div>
+                    <input type="hidden" class="todo-id" th:field="*{todos[__${itemStat.index}__].id}" />
+                    <input type="text" class="todo-description" th:field="*{todos[__${itemStat.index}__].description}" />
+                    <button type="button" class="btn btn-warning delete-todo">Delete</button>
+                </div>
+            </li>
+        </ul>
+        <button type="submit" class="btn btn-primary">Save List</button>
+
+    </form>
+
+    <footer th:replace="partials/footer :: footer">
+    </footer>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let todoCount = document.querySelector("#my-todos").children.length;
+
+        document.querySelector("#add-todo").addEventListener("click", function(event) {
+            const newTodoHTML = `
+<li>
+    <div>
+        <input type="hidden" id="todos${todoCount}.id" name="todos[${todoCount}].id" value="0">
+        <input type="text" id="todos${todoCount}.description" name="todos[${todoCount}].description" value="">
+        <button type="button" class="btn btn-warning delete-todo">Delete</button>
+    </div>
+</li>`;
+            document.querySelector("#my-todos").innerHTML += newTodoHTML;
+            addDeleteListeners();
+            todoCount++;
+        });
+
+        function addDeleteListeners() {
+            document.querySelectorAll(".delete-todo").forEach(function (button) {
+                button.addEventListener("click", deleteTodo);
+            });
+        }
+
+        function deleteTodo(event) {
+            this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
+
+            let todoIds = document.querySelectorAll(".todo-id");
+            for (let i = 0; i < todoIds.length; i++) {
+                todoIds[i].setAttribute("id", `todos${i}.id`);
+                todoIds[i].setAttribute("name", `todos[${i}].id`);
+            }
+            let todoDescriptions = document.querySelectorAll(".todo-description");
+            for (let i = 0; i < todoIds.length; i++) {
+                todoDescriptions[i].setAttribute("id", `todos${i}.description`);
+                todoDescriptions[i].setAttribute("name", `todos[${i}].description`);
+            }
+        }
+
+        addDeleteListeners();
+    });
+</script>
+</body>
+</html>

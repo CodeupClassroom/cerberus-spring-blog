@@ -40,17 +40,19 @@ public class SecurityConfiguration {
                          * only authenticated users can create and edit ads */
                         .requestMatchers("/dogs/create", "/dogs/*/edit").authenticated()
                         .requestMatchers("/posts/create", "/posts/*/edit").authenticated()
+                        .requestMatchers("/lists/create", "/lists/create/*", "/lists/*/edit").authenticated()
 
                         /* Pages that do not require authentication
                          * anyone can visit the home page, register, login, and view ads */
                         .requestMatchers("/", "/dogs", "/dogs/*", "/sign-up", "/login").permitAll()
                         .requestMatchers("/posts", "/posts/*").permitAll()
+                        .requestMatchers("/lists", "/lists/*").permitAll()
 
                         // allow loading of static resources
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 )
                 /* Login configuration */
-                .formLogin((login) -> login.loginPage("/login").defaultSuccessUrl("/posts"))
+                .formLogin((login) -> login.loginPage("/login").defaultSuccessUrl("/lists"))
                 /* Logout configuration */
                 .logout((logout) -> logout.logoutSuccessUrl("/"))
                 .httpBasic(withDefaults());

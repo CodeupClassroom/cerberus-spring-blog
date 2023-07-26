@@ -75,10 +75,12 @@
                 todoIds[i].setAttribute("name", `todos[${i}].id`);
             }
             let todoDescriptions = document.querySelectorAll(".todo-description");
-            for (let i = 0; i < todoIds.length; i++) {
+            for (let i = 0; i < todoDescriptions.length; i++) {
                 todoDescriptions[i].setAttribute("id", `todos${i}.description`);
                 todoDescriptions[i].setAttribute("name", `todos[${i}].description`);
             }
+
+            todoCount = todoIds.length;
         }
 
         addDeleteListeners();

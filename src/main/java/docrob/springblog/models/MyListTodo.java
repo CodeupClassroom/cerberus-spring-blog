@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "todos")
 public class MyListTodo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

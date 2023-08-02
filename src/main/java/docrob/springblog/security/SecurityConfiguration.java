@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 )
                 /* Login configuration */
-                .formLogin((login) -> login.loginPage("/login").defaultSuccessUrl("/posts"))
+                .formLogin((login) -> login.loginPage("/login").defaultSuccessUrl("/posts", true))
                 /* Logout configuration */
                 .logout((logout) -> logout.logoutSuccessUrl("/"))
                 .httpBasic(withDefaults());

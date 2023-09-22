@@ -46,8 +46,8 @@ public class PostController {
 
     @GetMapping("/create")
     public String showCreate(Model model) {
-        model.addAttribute("newPost", new Post());
-        return "/posts/create";
+        model.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     @PostMapping("/create")
@@ -64,7 +64,7 @@ public class PostController {
     @GetMapping("/{id}/edit")
     public String showEdit(@PathVariable Long id, Model model) {
         Post postToEdit = postDao.getReferenceById(id);
-        model.addAttribute("newPost", postToEdit);
+        model.addAttribute("post", postToEdit);
         return "/posts/create";
     }
 }

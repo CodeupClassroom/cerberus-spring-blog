@@ -9,7 +9,7 @@
 <div class="container-fluid card w-75">
   <h1 class="card-title">Create Post</h1>
 
-  <form th:method="POST" th:action="@{'/ads/create'}" th:object="${ad}">
+  <form th:method="POST" th:action="@{/posts/create}" th:object="${post}">
     <div class="mb-2">
       <h3>Title</h3>
       <input class="w-100" type="text" th:field="*{title}" id="title">

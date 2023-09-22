@@ -17,9 +17,9 @@
           <li sec:authorize="!isAuthenticated()" class="nav-item">
             <a th:classappend="${selectedPage == 'login'} ? active" class="nav-link" href="/login">Login</a>
           </li>
-          <li sec:authorize="isAuthenticated()" class="nav-item">
-            <a id="logout-link" class="nav-link" href="#">Logout</a>
-          </li>
+<!--          <li sec:authorize="isAuthenticated()" class="nav-item">-->
+<!--            <a id="logout-link" class="nav-link" href="#">Logout</a>-->
+<!--          </li>-->
           <li class="nav-item">
             <a th:classappend="${selectedPage == 'posts'} ? active" class="nav-link" aria-current="page" href="/posts">Posts</a>
           </li>
@@ -30,9 +30,25 @@
             <span class="nav-link disabled" th:text="@{| ${userNameLabel == null ? 'Not logged in' : userNameLabel} |}">insert logged in user name here</span>
           </li>
         </ul>
+        <li><a href="#" id="logOutLink">Log Out</a></li>
+
+<!--        style="display: none"-->
+        <form style="display: none" id="logOutForm" th:action="@{/logout}" th:method="post">
+          <button>Log Out</button>
+        </form>
       </div>
     </div>
   </nav>
+
+  <script>
+    const logOutForm = document.getElementById("logOutForm");
+    const logOutLink = document.getElementById("logOutLink");
+    logOutLink.addEventListener('click', () => {
+      logOutForm.submit();
+    });
+  </script>
 </div>
+
+
 </body>
 </html>

@@ -32,4 +32,11 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentUser")
     private List<Ad> Ads;
+
+    public User(long id, String username, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 }

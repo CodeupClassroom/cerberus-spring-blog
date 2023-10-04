@@ -57,7 +57,7 @@ public class MyListController {
         System.out.println("Reading " + list);
 
         model.addAttribute("list", list);
-        return "lists/create";
+        return "lists/create2";
     }
 
     @PostMapping("/create")

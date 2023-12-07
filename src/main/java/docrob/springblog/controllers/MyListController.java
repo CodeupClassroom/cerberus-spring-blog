@@ -6,6 +6,7 @@ import docrob.springblog.models.MyListTodo;
 import docrob.springblog.models.Post;
 import docrob.springblog.models.User;
 import docrob.springblog.repositories.MyListRepository;
+import docrob.springblog.repositories.UserRepository;
 import docrob.springblog.services.AuthBuddy;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/lists")
 public class MyListController {
     private MyListRepository listDao;
+    private UserRepository userDao;
 
     @GetMapping("")
     private String index(Model model) {
@@ -45,7 +47,7 @@ public class MyListController {
         list.setName("New list");
 
         model.addAttribute("list", list);
-        return "lists/create";
+        return "lists/create3";
     }
 
     @GetMapping("/create/{listId}")
@@ -57,22 +59,20 @@ public class MyListController {
         System.out.println("Reading " + list);
 
         model.addAttribute("list", list);
-        return "lists/create2";
+        return "lists/create3";
     }
 
     @PostMapping("/create")
-    public String doCreate(@ModelAttribute MyList list) {
-        System.out.println("Saving " + list);
+//    public String doCreate(@ModelAttribute MyList list) {
+    public String doCreate(@RequestBody MyList list) {
+        System.out.println("This is what is received: " + list);
 
-        User loggedInUser = AuthBuddy.getLoggedInUser();
-        if(loggedInUser.getId() == 0) {
-            return "redirect:/login";
-        }
+        User loggedInUser = userDao.findById(4L).get();
 
-        // reset the list id in the tasks because it was not part of the form
         for (MyListTodo todo : list.getTodos()) {
-            todo.setList(list);
+            System.out.println(todo);
         }
+
         list.setCreator(loggedInUser);
         listDao.save(list);
 

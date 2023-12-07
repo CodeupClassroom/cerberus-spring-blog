@@ -4,6 +4,9 @@
 <head>
     <header th:insert="partials/header :: head"></header>
     <title>Create List V2</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
 <body>
@@ -11,7 +14,7 @@
 </nav>
 
 <div class="container-fluid">
-    <h1>Create a List V2</h1>
+    <h1>Create a List V3</h1>
 
     <form class="mb-3" th:action="@{/lists/create}" th:method="post" th:object="${list}" >
         <input type="hidden" th:field="*{id}" />
@@ -46,32 +49,36 @@
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelector("#save-btn").addEventListener("click", async function(event) {
             // console.log("save clicked");
+            const token = document.querySelector('meta[name="_csrf"]').content;
+            const tokenKey = document.querySelector('meta[name="_csrf_header"]').content;
+
             const newList = {
                 name: "howdy list 1",
-                todos: []
+                todos: [
+                    {
+                        description: "todo 1"
+                    },
+                    {
+                        description: "todo 2"
+                    },
+                    {
+                        description: "todo 3"
+                    }
+                ]
             };
             // newList["_csrf"] = ;
 
-            const data = new URLSearchParams();
-            // for (const pair of new FormData(formElement)) {
-            data.append("_csrf", document.getElementsByName("_csrf")[0].value);
-            data.append("name", newList.name);
-            data.append("todos[0].description", "todo 1");
-            data.append("todos[1].description", "todo 2");
-            data.append("todos[2].description", "todo 3");
-            // }
+            console.log("this is what we are posting:");
+            console.log(newList);
 
             const url = 'http://localhost:8080/lists/create';
-            // const options = {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(newList)
-            // };
+            const headers = {};
+            headers['Content-Type'] = 'application/json';
+            headers[tokenKey] = token;
             const options = {
                 method: 'POST',
-                body: data
+                headers,
+                body: JSON.stringify(newList)
             };
             const response = await fetch(url, options);
             console.log(response);
